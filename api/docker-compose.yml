@@ -1,0 +1,16 @@
+services:
+  database:
+    image: postgres:15
+    container_name: tic_tac_toe_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin_pass
+      POSTGRES_DB: tic_tac_toe
+    ports:
+      - "5432:5432"
+    volumes:
+      - tic_tac_toe:/var/lib/postgresql/data
+
+volumes:
+  tic_tac_toe:
+    driver: local
