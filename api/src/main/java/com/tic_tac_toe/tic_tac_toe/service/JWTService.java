@@ -15,6 +15,10 @@ import java.util.Date;
  */
 @Service
 public class JWTService {
+    private final Date halfHourToken = new Date(System.currentTimeMillis() + 1000 * 60 * 30);
+
+    private final Date oneDayRefreshToken = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24);
+
     @Value("${app.jwt.secret}")
     private String appSecretKey;
 
@@ -30,7 +34,16 @@ public class JWTService {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 dia
+                .setExpiration(halfHourToken)
+                .signWith(secretKey)
+                .compact();
+    }
+
+    public String generateRefreshToken(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(oneDayRefreshToken)
                 .signWith(secretKey)
                 .compact();
     }
