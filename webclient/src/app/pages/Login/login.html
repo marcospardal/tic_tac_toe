@@ -1,0 +1,16 @@
+<main class="login-page">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="main-content">
+    <img src="/icons/tic-tac-toe.svg" class="logo"/>
+    <mat-form-field class="login-input">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="My username"/>
+    </mat-form-field>
+
+    <mat-form-field class="login-input">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password"/>
+    </mat-form-field>
+
+    <button matButton="filled" type="submit">Login</button>
+  </form>
+</main>

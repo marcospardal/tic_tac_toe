@@ -1,0 +1,60 @@
+<main class="register-page">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="main-content">
+    <img src="/icons/tic-tac-toe.svg" class="logo" />
+    <mat-form-field class="login-input">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="My username" />
+    </mat-form-field>
+
+    <mat-form-field class="login-input">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" />
+    </mat-form-field>
+
+    <mat-form-field class="login-input">
+      <mat-label>Confirm password</mat-label>
+      <input matInput formControlName="confirmPassword" type="password" />
+    </mat-form-field>
+
+    <button matButton="filled" type="submit">Register</button>
+
+    <div>
+      <span>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          [fontIcon]="
+            registerForm.controls['username'].hasError('usernameIsTooLong') ? 'close' : 'check'
+          "
+        />
+        <p>Username is too long</p>
+      </span>
+
+      <span>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          [fontIcon]="
+            registerForm.controls['confirmPassword'].hasError('passwordMismatch')
+              ? 'close'
+              : 'check'
+          "
+        />
+        <p>Password has to match with confirm password</p>
+      </span>
+
+      <span>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          [fontIcon]="
+            registerForm.controls['password'].hasError('passwordDontContainNumbers')
+              ? 'close'
+              : 'check'
+          "
+        />
+        <p>Password has to contain numbers</p>
+      </span>
+    </div>
+  </form>
+</main>
