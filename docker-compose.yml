@@ -1,0 +1,38 @@
+services:
+  database:
+    image: postgres:15
+    container_name: tic_tac_toe_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin_pass
+      POSTGRES_DB: tic_tac_toe
+    ports:
+      - "5432:5432"
+    volumes:
+      - tic_tac_toe:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./api
+    container_name: tic_tac_toe_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+
+  frontend:
+    build:
+      context: ./webclient
+    container_name: tic_tac_toe_webclient
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  tic_tac_toe:
+    driver: local
