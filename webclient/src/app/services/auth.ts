@@ -3,14 +3,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../models/auth.model';
 import { environment } from '../../environments/environment';
+import { Cookie } from './cookie';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
+  private readonly TOKEN_KEY = 'auth_token';
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: Cookie) {}
 
   login(username: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, {
@@ -24,5 +26,18 @@ export class Auth {
       username,
       userPassword: password,
     });
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.cookieService.get(this.TOKEN_KEY);
+    return !!token;
+  }
+
+  getToken(): string | null {
+    return this.cookieService.get(this.TOKEN_KEY);
+  }
+
+  setToken(token: string): void {
+    this.cookieService.set(this.TOKEN_KEY, token, 1); // expira em 1 dia
   }
 }

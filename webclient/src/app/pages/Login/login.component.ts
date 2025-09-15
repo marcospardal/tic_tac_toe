@@ -38,7 +38,10 @@ export class LoginPage {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
       this.authService.login(username, password).subscribe({
-        next: (res) => console.log('login done', res),
+        next: (res) => {
+          this.authService.setToken(JSON.stringify(res));
+          this.router.navigate(['/']);
+        },
         error: (error) => this.onLoginError(error.error),
       });
     }
