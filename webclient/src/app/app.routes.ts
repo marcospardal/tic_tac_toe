@@ -3,6 +3,7 @@ import { LoginPage } from './pages/Login/login.component';
 import { RegisterPage } from './pages/Register/register.component';
 import { HomePage } from './pages/Home/home.component';
 import { AuthGuard } from './auth-guard';
+import { ProfilePage } from './pages/Profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,11 @@ export const routes: Routes = [
     path: '',
     component: HomePage,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfilePage,
+    canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '' },
 ];

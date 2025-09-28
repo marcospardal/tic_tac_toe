@@ -34,10 +34,11 @@ export class Auth {
   }
 
   getToken(): string | null {
-    return this.cookieService.get(this.TOKEN_KEY);
+    const userInfo: AuthResponse = JSON.parse(this.cookieService.get(this.TOKEN_KEY) || '');
+    return userInfo.accessToken;
   }
 
   setToken(token: string): void {
-    this.cookieService.set(this.TOKEN_KEY, token, 1); // expira em 1 dia
+    this.cookieService.set(this.TOKEN_KEY, token, 1);
   }
 }

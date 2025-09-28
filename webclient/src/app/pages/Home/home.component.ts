@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Auth } from '../../services/auth';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 
@@ -11,7 +10,6 @@ import { MatCard } from '@angular/material/card';
   imports: [MatButtonModule, MatCard],
 })
 export class HomePage {
-  constructor(private auth: Auth) {
-    console.log('token', auth.getToken());
-  }
+  constructor() {}
+
 }

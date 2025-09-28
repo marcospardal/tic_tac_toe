@@ -1,0 +1,20 @@
+<main>
+  <mat-card class="summary">
+    <span>
+      {{ playerSummary?.numberOfVictories || 0 }} <br />
+      Number of victories
+    </span>
+    <span>
+      {{ playerSummary?.numberOfLosses || 0 }} <br />
+      Number of losses
+    </span>
+    <span>
+      {{ playerSummary?.numberOfGames || 0 }} <br />
+      Total games
+    </span>
+    <span>
+      {{ playerSummary?.percentageOfWinning || 0 }} <br />
+      Percentage of winning
+    </span>
+  </mat-card>
+</main>
