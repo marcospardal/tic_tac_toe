@@ -17,4 +17,26 @@
       Percentage of winning
     </span>
   </mat-card>
+
+  <mat-card class="summary">
+    <table mat-table [dataSource]="playerGameHistory" class="mat-elevation-z8">
+      <ng-container matColumnDef="opponent">
+        <th mat-header-cell *matHeaderCellDef>Opponent</th>
+        <td mat-cell *matCellDef="let element">{{ element.opponentUsername }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="winner">
+        <th mat-header-cell *matHeaderCellDef>Winner</th>
+        <td mat-cell *matCellDef="let element">{{ element.winnerUsername }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef>Game Duration</th>
+        <td mat-cell *matCellDef="let element">{{ element.gameDuration }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="gamesTableColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: gamesTableColumns"></tr>
+    </table>
+  </mat-card>
 </main>
