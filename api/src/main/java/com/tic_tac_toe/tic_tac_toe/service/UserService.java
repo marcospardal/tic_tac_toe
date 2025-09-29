@@ -32,6 +32,10 @@ public class UserService {
         this.userRepository.save(newUser);
     }
 
+    public UserDTO findByUserId(Long userId) {
+        return this.userRepository.findById(userId).map(this::convertToDto).orElse(null);
+    }
+
     private UserDTO convertToDto(UserEntity entity) {
         UserDTO dto = new UserDTO();
         BeanUtils.copyProperties(entity, dto);

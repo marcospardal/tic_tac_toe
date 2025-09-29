@@ -1,5 +1,6 @@
 package com.tic_tac_toe.tic_tac_toe.controller;
 
+import com.tic_tac_toe.tic_tac_toe.dto.GameResult;
 import com.tic_tac_toe.tic_tac_toe.dto.PlayerSummaryDTO;
 import com.tic_tac_toe.tic_tac_toe.service.GameHistoryService;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class GameHistoryController {
@@ -24,5 +27,14 @@ public class GameHistoryController {
 
         PlayerSummaryDTO playerSummaryDTO = this.gameHistoryService.getPlayerSummary(username);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerSummaryDTO);
+    }
+
+    @GetMapping("/player-history")
+    public ResponseEntity<List<GameResult>> playerHistory() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        List<GameResult> userGamesHistory = this.gameHistoryService.getPlayerGamesHistory(username);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userGamesHistory);
     }
 }

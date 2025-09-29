@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_games_table
+      author: admin
+      changes:
+        - createTable:
+            tableName: games
+            columns:
+              - column:
+                  name: game_id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: player_1_id
+                  type: BIGSERIAL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: player_2_id
+                  type: BIGSERIAL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: winner_id
+                  type: BIGSERIAL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: game_duration
+                  type: INTEGER
+                  constraints:
+                    nullable: false

@@ -18,9 +18,6 @@ import java.util.function.Function;
  */
 @Service
 public class JWTService {
-    private final Date halfHourToken = new Date(System.currentTimeMillis() + 1000 * 60 * 30);
-
-    private final Date oneDayRefreshToken = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24);
 
     @Value("${app.jwt.secret}")
     private String appSecretKey;
@@ -34,6 +31,7 @@ public class JWTService {
     }
 
     public String generateToken(String username) {
+        Date halfHourToken = new Date(System.currentTimeMillis() + 1000 * 60 * 30);
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
@@ -43,6 +41,7 @@ public class JWTService {
     }
 
     public String generateRefreshToken(String username) {
+        Date oneDayRefreshToken = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24);
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
