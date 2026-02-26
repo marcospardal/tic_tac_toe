@@ -1,38 +1,31 @@
 services:
-  database:
-    image: postgres:15
-    container_name: tic_tac_toe_db
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin_pass
-      POSTGRES_DB: tic_tac_toe
-    ports:
-      - "5432:5432"
-    volumes:
-      - tic_tac_toe:/var/lib/postgresql/data
-
   backend:
-    build:
-      context: ./api
-    container_name: tic_tac_toe_backend
+    build: ./game
+    container_name: tic_tac_toe_back
     ports:
       - "8080:8080"
-    depends_on:
-      - database
     environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_PROFILES_ACTIVE=prod
+    networks:
+      - app-network
 
   frontend:
-    build:
-      context: ./webclient
-    container_name: tic_tac_toe_webclient
+    build: 
+      context: ./tic-tac-toe-web
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+    container_name: tic_tac_toe_front
     ports:
-      - "4200:80"
+      - "3000:3000"
+    stdin_open: true
     depends_on:
       - backend
+    networks:
+      - app-network
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+    
 
-volumes:
-  tic_tac_toe:
-    driver: local
+networks:
+  app-network:
+    driver: bridge
